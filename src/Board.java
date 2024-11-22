@@ -7,6 +7,7 @@ public class Board {
 
     private int moveCounter;
 
+//    Constructor
     public Board() {
         whiteQuan = new int[24];
         blackQuan = new int[24];
@@ -15,6 +16,7 @@ public class Board {
         moveCounter = 0;
     }
 
+//    Accessors
     public int getMoveCounter() {
         return moveCounter;
     }
@@ -27,6 +29,7 @@ public class Board {
         return whiteQuan[n];
     }
 
+//    Mutators
     public void setBlackQuan(int pos, int n) {
         this.blackQuan[pos] = n;
     }
@@ -39,6 +42,8 @@ public class Board {
         this.moveCounter = n;
     }
 
+
+//    No-arg draw method
     public void draw() {
         draw(whiteQuan, blackQuan);
     }
@@ -117,6 +122,7 @@ public class Board {
         System.out.println();
     }
 
+//    moveWhites overloading.
     public void moveWhites(int curPos, int newPos) {
         moveWhites(whiteQuan, curPos, newPos);
     }
@@ -134,8 +140,9 @@ public class Board {
 
     }
 
+//    moveBlacks overloading.
     public void moveBlacks(int curPos, int newPos) {
-        moveWhites(whiteQuan, curPos, newPos);
+        moveBlacks(whiteQuan, curPos, newPos);
     }
 
     //  Receives the quantity lists of both sides, current and new positions, and moves the corresponding piece.
@@ -152,12 +159,17 @@ public class Board {
 
     }
 
+//    Play
     public void play(Scanner sc, int dice1, int dice2) {
 
-        boolean headMove = false;
-        int countPairMoves = 0;
-
-        while (!(dice1 == 0 && dice2 == 0)) {
+        boolean headMoveAllowed = true;
+        int movesLeft = 2;
+        boolean fourMoves = false;
+        if (dice1 == dice2) {
+            movesLeft = 4;
+            fourMoves = true;
+        }
+        while (movesLeft != 0) {
 
             System.out.println("The numbers on the dice are: " + dice1 + " and " + dice2);
             System.out.println("Input the move:");
@@ -171,7 +183,7 @@ public class Board {
                     continue;
                 }
 
-                if (headMove && initial == 0) {
+                if (!headMoveAllowed && initial == 0) {
                     System.out.println("Illegal move!! Cannot play from the head");
                     continue;
                 }
@@ -181,31 +193,32 @@ public class Board {
                     continue;
                 }
                 if ((newPos - initial) == dice1) {
-                    moveWhites(whiteQuan, initial, newPos);
-                    headMove = true;
-
-                    dice1 = 0;
-                    draw(whiteQuan, blackQuan);
+                    moveWhites(initial, newPos);
+                    movesLeft--;
+                    draw();
                     System.out.println("Your piece moved from " + initial + " to " + newPos);
+                    if (!fourMoves || !(dice1 == 4 || dice1 == 6 || dice1 == 3) || movesLeft == 2)
+                        headMoveAllowed = false;
 
                 } else if ((newPos - initial) == dice2) {
-                    moveWhites(whiteQuan, initial, newPos);
-                    headMove = true;
-                    dice2 = 0;
-                    draw(whiteQuan, blackQuan);
+                    moveWhites(initial, newPos);
+                    headMoveAllowed = false;
+                    movesLeft--;
+                    draw();
                     System.out.println("Your piece moved from " + initial + " to " + newPos);
 
                 } else {
                     System.out.println("Illegal move!! Wrong positions");
                 }
-            } else {
+            }
+            else {
 
                 if (whiteQuan[newPos] != 0) {
                     System.out.println("Illegal move!! Opponent's pieces");
                     continue;
                 }
 
-                if (headMove && initial == 12) {
+                if (!headMoveAllowed && initial == 12) {
                     System.out.println("Illegal move!! Cannot play from the head");
                     continue;
                 }
@@ -216,17 +229,19 @@ public class Board {
                 }
 
                 if ((newPos - initial) == dice1) {
-                    moveBlacks(blackQuan, initial, newPos);
-                    headMove = true;
-                    dice1 = 0;
-
-                    draw(whiteQuan, blackQuan);
+                    moveBlacks(initial, newPos);
+                    movesLeft--;
+                    draw();
                     System.out.println("Your piece moved from " + initial + " to " + newPos);
-                } else if ((newPos - initial) == dice2) {
-                    moveBlacks(blackQuan, initial, newPos);
-                    headMove = true;
-                    dice2 = 0;
-                    draw(whiteQuan, blackQuan);
+                    if (!fourMoves || !(dice1 == 4 || dice1 == 6 || dice1 == 3) || movesLeft == 2)
+                        headMoveAllowed = false;
+                }
+
+                else if ((newPos - initial) == dice2) {
+                    moveBlacks(initial, newPos);
+                    headMoveAllowed = false;
+                    movesLeft--;
+                    draw();
                     System.out.println("Your piece moved from " + initial + " to " + newPos);
                 } else {
                     System.out.println("Illegal move!! Wrong positions");
