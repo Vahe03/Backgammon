@@ -142,9 +142,8 @@ public class Board {
 
 //    moveBlacks overloading.
     public void moveBlacks(int curPos, int newPos) {
-        moveBlacks(whiteQuan, curPos, newPos);
+        moveBlacks(blackQuan, curPos, newPos);
     }
-
     //  Receives the quantity lists of both sides, current and new positions, and moves the corresponding piece.
     private void moveBlacks(int[] blackQuan, int curPos, int newPos) {
 
