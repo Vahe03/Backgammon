@@ -4,19 +4,19 @@ import java.util.Random;
 public class Main {
 
     public static void main(String[] args) {
-       Board board = new Board();
+       Game game = new Game();
 
         Dice dice = new Dice();
 
         int dice1 = 3;
         int dice2 = 3;
 
-        board.draw();
+        game.draw();
         while (true) {
 
             Scanner sc = new Scanner(System.in);
 
-            if (board.getMoveCounter() % 2 == 0)
+            if (game.getMoveCounter() % 2 == 0)
                 System.out.println("White's move. Roll?");
             else {
                 System.out.println("Black's move. Roll?");
@@ -24,11 +24,11 @@ public class Main {
 
             if (sc.nextLine().equals("y")) {
 
-                dice1 = dice.roll();
-                dice2 = dice.roll();
+//                dice1 = dice.roll();
+//                dice2 = dice.roll();
 
-                board.play(sc, dice1, dice2);
-                board.setMoveCounter(board.getMoveCounter()+1);
+                game.play(sc, dice1, dice2);
+                game.setMoveCounter(game.getMoveCounter()+1);
             }
         }
 
