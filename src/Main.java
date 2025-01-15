@@ -8,8 +8,8 @@ public class Main {
 
         Dice dice = new Dice();
 
-        int dice1 = 0;
-        int dice2 = 0;
+        int dice1 = 3;
+        int dice2 = 3;
 
         board.draw();
         while (true) {
@@ -18,8 +18,9 @@ public class Main {
 
             if (board.getMoveCounter() % 2 == 0)
                 System.out.println("White's move. Roll?");
-            else
+            else {
                 System.out.println("Black's move. Roll?");
+            }
 
             if (sc.nextLine().equals("y")) {
 

@@ -131,7 +131,7 @@ public class Board {
     private void moveWhites(int[] whiteQuan, int curPos, int newPos) {
 
         whiteQuan[curPos] -= 1;
-        if (newPos > curPos && newPos < 23) {
+        if (newPos > curPos) {
             whiteQuan[newPos] += 1;
         }
         else {
@@ -148,9 +148,8 @@ public class Board {
     private void moveBlacks(int[] blackQuan, int curPos, int newPos) {
 
         blackQuan[curPos] -= 1;
-        if ((newPos > curPos || newPos < 12) && newPos < 23) {
+        if ((newPos > curPos || newPos < 12)) {
             blackQuan[newPos] += 1;
-            System.out.println("Your piece moved from " + curPos + " to " + newPos);
         }
         else {
             System.out.println("No such position");
@@ -161,6 +160,7 @@ public class Board {
 //    Play
     public void play(Scanner sc, int dice1, int dice2) {
 
+        int headMoves = 0;
         boolean headMoveAllowed = true;
         int movesLeft = 2;
         boolean fourMoves = false;
@@ -175,7 +175,18 @@ public class Board {
             int initial = sc.nextInt();
             int newPos = sc.nextInt();
 
+//          Whites move
             if (moveCounter % 2 == 0) {
+
+                if (newPos > 23) {
+                    System.out.println("No such position");
+                    continue;
+                }
+
+                if (initial == newPos) {
+                    System.out.println("Illegal move!! Input different positions");
+                    continue;
+                }
 
                 if (blackQuan[newPos] != 0) {
                     System.out.println("Illegal move!! Opponent's pieces");
@@ -195,13 +206,16 @@ public class Board {
                     moveWhites(initial, newPos);
                     movesLeft--;
                     draw();
+                    if (initial == 0)
+                        headMoves++;
                     System.out.println("Your piece moved from " + initial + " to " + newPos);
-                    if (!fourMoves || !(dice1 == 4 || dice1 == 6 || dice1 == 3) || movesLeft == 2)
+                    if ((!fourMoves && headMoves == 1) || !(dice1 == 4 || dice1 == 6 || dice1 == 3) || headMoves == 2)
                         headMoveAllowed = false;
 
                 } else if ((newPos - initial) == dice2) {
                     moveWhites(initial, newPos);
-                    headMoveAllowed = false;
+                    if (initial == 0)
+                        headMoveAllowed = false;
                     movesLeft--;
                     draw();
                     System.out.println("Your piece moved from " + initial + " to " + newPos);
@@ -210,7 +224,19 @@ public class Board {
                     System.out.println("Illegal move!! Wrong positions");
                 }
             }
+
+//          Blacks move
             else {
+
+                if (newPos > 23) {
+                    System.out.println("No such position");
+                    continue;
+                }
+
+                if (initial == newPos) {
+                    System.out.println("Illegal move!! Input different positions");
+                    continue;
+                }
 
                 if (whiteQuan[newPos] != 0) {
                     System.out.println("Illegal move!! Opponent's pieces");
@@ -231,14 +257,17 @@ public class Board {
                     moveBlacks(initial, newPos);
                     movesLeft--;
                     draw();
+                    if (initial == 12)
+                        headMoves++;
                     System.out.println("Your piece moved from " + initial + " to " + newPos);
-                    if (!fourMoves || !(dice1 == 4 || dice1 == 6 || dice1 == 3) || movesLeft == 2)
+                    if ((!fourMoves && headMoves == 1) || !(dice1 == 4 || dice1 == 6 || dice1 == 3) || headMoves == 2)
                         headMoveAllowed = false;
                 }
 
                 else if ((newPos - initial) == dice2) {
                     moveBlacks(initial, newPos);
-                    headMoveAllowed = false;
+                    if (initial == 12)
+                        headMoveAllowed = false;
                     movesLeft--;
                     draw();
                     System.out.println("Your piece moved from " + initial + " to " + newPos);
