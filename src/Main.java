@@ -8,11 +8,11 @@ public class Main {
 
         Dice dice = new Dice();
 
-        int dice1 = 3;
-        int dice2 = 3;
+        int dice1 = 0;
+        int dice2 = 0;
 
         game.draw();
-        while (true) {
+        while (!game.getGameEnded()) {
 
             Scanner sc = new Scanner(System.in);
 
@@ -24,8 +24,8 @@ public class Main {
 
             if (sc.nextLine().equals("y")) {
 
-//                dice1 = dice.roll();
-//                dice2 = dice.roll();
+                dice1 = dice.roll();
+                dice2 = dice.roll();
 
                 game.play(sc, dice1, dice2);
                 game.setMoveCounter(game.getMoveCounter()+1);
