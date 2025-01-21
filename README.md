@@ -1,10 +1,9 @@
-## Backgammon (Development of the project in progress)
-Welcome to the Backgammon project! This is an ongoing development of a digital version of the classic game of Backgammon.
+## Backgammon
+This repository contains a fully functional and interactive digital version of the classic game of Backgammon.
 
 ## Overview
+This project aims to provide an engaging experience of Backgammon, adhering strictly to the traditional rules of the game.
 
-The goal of this project is to create a fully functional and interactive Backgammon (Long Nardy) game.
-
-## Features (Planned)
-- Terminal-based multiplayer game of backgammon
-- Strict adherence to Backgammon rules.
+## Features
+- Multiplayer Gameplay: Play against another player in a terminal-based environment.
+- Rule Enforcement: The game enforces all standard Backgammon rules to ensure fair play.
